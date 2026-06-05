@@ -2,6 +2,7 @@ Este es el inicio de nuestro proyecto de Gestion de Inventario basado en RPG's
 
 Integrantes:
 David Herrera C.I: 31213680
+Mahlon Romero C.I: 31986276
 
 
 Tematica:
