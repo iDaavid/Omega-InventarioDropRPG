@@ -9,3 +9,10 @@
 | Árbol B | No se usará. El almacenamiento y persistencia de datos se gestionará directamente con lectura/escritura de archivos `.json`. | N/A | N/A |
 | Grafo | No se usará. Nuestro enfoque actual es inventario y matemáticas (RNG); no hay mapas, movimiento ni misiones interconectadas. | N/A | N/A |
 | Hashing | Módulos `inventario.py` y `rng_drops.py`. Núcleo de las *Loot Tables* de los jefes (probabilidades) y el inventario del jugador. | `insert` (agregar ítem nuevo), `get` (consultar probabilidad/cantidad), `update` (sumar recursos). | Biblioteca nativa (Diccionarios de Python `dict`). |
+
+## Distribución de Tareas
+
+* **David Herrera:** Responsable de `main.py` y `servidor.py`. Gestionará la cola de peticiones, la orquestación del flujo principal y asegurará que los módulos se comuniquen correctamente.
+* **Luis Bernay:** Responsable de `rng_drops.py` y la estructura de `jefes.json`. Se enfocará en la precisión de las probabilidades, la implementación del sistema "Pity" y la lógica matemática de obtención de ítems.
+* **Carlos Chinchilla:** Responsable de la capa visual del juego. Diseñará la interfaz para que sea intuitiva, renderizará los logs del historial usando listas y gestionará la navegación mediante pilas.
+* **Mahlon Romero:** Responsable de `inventario.py` y la persistencia de datos. Asegurará que los recursos se guarden/carguen correctamente, implementará el manejo de errores (try-except) y realizará pruebas de integración para asegurar que todo el sistema sea robusto.
