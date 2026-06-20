@@ -1,3 +1,4 @@
+from modulos import rng_drops
 import streamlit as st
 
 # Configuración de página minimalista
@@ -12,9 +13,19 @@ if 'nombre' not in st.session_state:
     }
     st.session_state.botin = "Ninguno"
 
+# Cargar el sistema RNG 
+if 'rng' not in st.session_state:
+    st.session_state.rng = rng_drops.RNGDrops("datos/jefes.json")
+
 def modificar_stat(stat, delta):
     st.session_state.stats[stat] += delta
     st.rerun()
+
+def calcular_drop():
+    return st.session_state.rng.calcular_drop_completo(
+        "dragon_anciano", 
+        st.session_state.botin
+    )
 
 # --- Menú lateral ---
 st.sidebar.title("Menú")
