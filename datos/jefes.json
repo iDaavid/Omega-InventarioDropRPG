@@ -1,0 +1,40 @@
+{
+  "zonas": {
+    "bosque_oscuro": {
+      "nombre": "Bosque Oscuro del Norte",
+      "monstruos": {
+        "dragon_anciano": {
+          "nombre": "Dragón Anciano Vorkath",
+          "vida": 750,
+          "defensa": 214,
+          "loot": {
+            "Semilla de Limpwurt": {
+              "item": "Semilla de Limpwurt",
+              "probabilidad": 0.10,
+              "pity": {
+                "probabilidad_incremento": 0.05,
+                "max_intentos": 20
+              }
+            },
+            "Semilla de Ranarr": {
+              "item": "Semilla de Ranarr",
+              "probabilidad": 0.02,
+              "pity": {
+                "probabilidad_incremento": 0.005,
+                "max_intentos": 100
+              }
+            },
+            "Semilla de torstol": {
+              "item": "Semilla de torstol",
+              "probabilidad": 0.005,
+              "pity": {
+                "probabilidad_incremento": 0.002,
+                "max_intentos": 250
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

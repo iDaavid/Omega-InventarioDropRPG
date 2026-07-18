@@ -3,7 +3,7 @@ import random
 import math
 
 class RNGDrops:
-    def init(self, ruta_json):
+    def __init__(self, ruta_json):
         self.ruta_json = ruta_json
         self.datos_mundo = self.cargar_datos()
 
@@ -54,21 +54,66 @@ class RNGDrops:
             return 1
 
     def calcular_tiempo_combate(self, stats_jugador, stats_monstruo):
-       
-        # Extraer estadísticas del jugador 
-        ataque = max(1, stats_jugador.get("Ataque", 0))
-        fuerza = max(1, stats_jugador.get("Fuerza", 0))
-        
-        # Extraer estadísticas del monstruo
+        import math
+
+        # 1. Leer estadísticas del jugador (Mínimo nivel 1)
+        ataque = max(1, stats_jugador.get("Ataque", 1))
+        fuerza = max(1, stats_jugador.get("Fuerza", 1))
+        rango = max(1, stats_jugador.get("Alcance", 1))
+        magia = max(1, stats_jugador.get("Magia", 1))
+
+        # 2. Leer estadísticas del monstruo
         vida_monstruo = max(1, stats_monstruo.get("vida", 100))
-        defensa_monstruo = max(0, stats_monstruo.get("defensa", 0))
+        defensa_monstruo = max(1, stats_monstruo.get("defensa", 1))
 
-        # Fórmula de Daño Base
-        # Garantiza un mínimo de 1 de daño por golpe para evitar bucles infinitos
-        daño_por_segundo = max(1, (ataque + fuerza) - defensa_monstruo)
+        # 3. Detectar el estilo de combate automáticamente (el stat más alto)
+        max_stat = max(ataque, rango, magia)
+        
+        if max_stat == rango:
+            # Estilo Ranged
+            nivel_precision = rango
+            nivel_fuerza = rango
+        elif max_stat == magia:
+            # Estilo Magia
+            nivel_precision = magia
+            nivel_fuerza = magia
+        else:
+            # Estilo Melee por defecto
+            nivel_precision = ataque
+            nivel_fuerza = fuerza
 
-        # Tiempo en segundos que toma derrotar al monstruo una vez
-        tiempo_por_caza_segundos = vida_monstruo / daño_por_segundo
+        # 4. Cálculo de Max Hit (Sin equipo ni prayers)
+        fuerza_efectiva = nivel_fuerza + 8
+        max_hit = math.floor(0.5 + fuerza_efectiva)
+
+        # 5. Cálculo de Attack Roll (Jugador) y Defence Roll (Monstruo)
+        ataque_efectivo = nivel_precision + 8
+        attack_roll = ataque_efectivo * 64
+        
+        defensa_efectiva = defensa_monstruo + 8
+        defence_roll = defensa_efectiva * 64
+
+        # 6. Cálculo de Hit Chance (Probabilidad de conectar el golpe)
+        if attack_roll > defence_roll:
+            hit_chance = 1 - ((defence_roll + 2) / (2 * (attack_roll + 1)))
+        else:
+            hit_chance = attack_roll / (2 * (defence_roll + 1))
+
+        # 7. Cálculo de Daño Por Segundo (DPS)
+        # En OSRS, un golpe exitoso hace un daño aleatorio entre 0 y el Max Hit.
+        # Por lo tanto, el daño promedio por ataque es (Max Hit / 2) multiplicado por la probabilidad de acertar.
+        dano_promedio_por_ataque = hit_chance * (max_hit / 2)
+
+        # Asumimos una velocidad estándar de arma de OSRS (4 ticks = 2.4 segundos)
+        velocidad_arma_segundos = 2.4
+        
+        dps_real = dano_promedio_por_ataque / velocidad_arma_segundos
+        
+        # Evitar DPS de cero absoluto para que el simulador no arroje errores de división
+        dps_real = max(0.01, dps_real)
+
+        # 8. Retornar el tiempo total de cacería en segundos
+        tiempo_por_caza_segundos = vida_monstruo / dps_real
         return tiempo_por_caza_segundos
 
     def calcular_caceria_completa(self, id_zona, id_monstruo, nombre_item, stats_jugador):
