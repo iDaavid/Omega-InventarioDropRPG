@@ -1,40 +1,105 @@
 {
-  "zonas": {
-    "bosque_oscuro": {
-      "nombre": "Bosque Oscuro del Norte",
-      "monstruos": {
-        "dragon_anciano": {
-          "nombre": "Dragón Anciano Vorkath",
-          "vida": 750,
-          "defensa": 214,
-          "loot": {
-            "Semilla de Limpwurt": {
-              "item": "Semilla de Limpwurt",
-              "probabilidad": 0.10,
-              "pity": {
-                "probabilidad_incremento": 0.05,
-                "max_intentos": 20
-              }
-            },
-            "Semilla de Ranarr": {
-              "item": "Semilla de Ranarr",
-              "probabilidad": 0.02,
-              "pity": {
-                "probabilidad_incremento": 0.005,
-                "max_intentos": 100
-              }
-            },
-            "Semilla de torstol": {
-              "item": "Semilla de torstol",
-              "probabilidad": 0.005,
-              "pity": {
-                "probabilidad_incremento": 0.002,
-                "max_intentos": 250
-              }
+    "zonas": {
+        "bosque_oscuro": {
+            "nombre": "Bosque Oscuro del Norte",
+            "monstruos": {
+                "dragon_anciano": {
+                    "nombre": "Dragón Anciano Vorkath",
+                    "vida": 750,
+                    "defensa": 214,
+                    "loot": {
+                        "Semilla de Limpwurt": {
+                            "item": "Semilla de Limpwurt",
+                            "probabilidad_x": 10,
+                            "pity": {
+                                "probabilidad_incremento": 0.02
+                            }
+                        },
+                        "Semilla de Ranarr": {
+                            "item": "Semilla de Ranarr",
+                            "probabilidad_x": 50,
+                            "pity": {
+                                "probabilidad_incremento": 0.004
+                            }
+                        },
+                        "Semilla de torstol": {
+                            "item": "Semilla de torstol",
+                            "probabilidad_x": 200,
+                            "pity": {
+                                "probabilidad_incremento": 0.001
+                            }
+                        }
+                    }
+                }
             }
-          }
+        },
+        "varrock": {
+            "nombre": "Varrock",
+            "monstruos": {
+                "scurrius": {
+                    "nombre": "Scurrius",
+                    "vida": 500,
+                    "defensa": 0,
+                    "loot": {
+                        "Scurrius Spine": {
+                            "item": "Scurrius Spine",
+                            "probabilidad_x": 20,
+                            "pity": {
+                                "probabilidad_incremento": 0.01
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Fremennik": {
+            "nombre": "Fremennik",
+            "monstruos": {
+                "Vorkath": {
+                    "nombre": "Vorkath",
+                    "vida": 750,
+                    "defensa": 214,
+                    "loot": {
+                        "Vorkath Head": {
+                            "item": "Vorkath Head",
+                            "probabilidad_x": 50,
+                            "pity": {
+                                "probabilidad_incremento": 0.004
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Varrock": {
+            "nombre": "Varrock",
+            "monstruos": {
+                "Scurrius": {
+                    "nombre": "Scurrius",
+                    "vida": 500,
+                    "defensa": 0,
+                    "loot": {}
+                }
+            }
+        },
+        "Falador": {
+            "nombre": "Falador",
+            "monstruos": {
+                "Giant Mole": {
+                    "nombre": "Giant Mole",
+                    "vida": 200,
+                    "defensa": 0,
+                    "loot": {
+                        "Mole Skin": {
+                            "item": "Mole Skin",
+                            "probabilidad_x": 1,
+                            "pity": {
+                                "probabilidad_incremento": 0.2
+                            }
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
