@@ -14,12 +14,12 @@ from datetime import datetime
 from typing import Optional, List, Dict, Any, Deque
 
 
-# ============================================================
+
 # ESTRUCTURA 1: ÁRBOL BINARIO DE BÚSQUEDA (ABB)
 # Ordena simulaciones por horas de farmeo.
 # Rama izquierda = buena suerte (menos horas).
 # Rama derecha   = mala suerte (más horas).
-# ============================================================
+
 
 class NodoCaceria:
     """Nodo individual del ABB. Almacena el resultado completo de una simulación."""
@@ -187,10 +187,10 @@ class ArbolHistorial:
             self._buscar_rango_recursivo(nodo.derecha, h_min, h_max, lista)
 
 
-# ============================================================
+
 # ESTRUCTURA 2: COLA FIFO + ORQUESTADOR
 # Cola circular (deque) para las últimas N simulaciones.
-# ============================================================
+
 
 class ServidorRPG:
     """

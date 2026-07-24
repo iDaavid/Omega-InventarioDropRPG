@@ -30,9 +30,9 @@ def _borde(ancho=1, color="#1e3a5f"):
 
 def buscar_clave_ci(diccionario, clave):
     """
-    Búsqueda case-insensitive en las claves de un diccionario.
-    Permite que el usuario escriba 'Scurrius' y encuentre 'scUrrius'.
-    Retorna la clave REAL del dict, o None si no existe.
+    Busca en un diccionario sin importar si usas mayúsculas o minúsculas.
+    Por ejemplo, si el usuario escribe "Scurrius" pero en los datos está como "scUrrius",
+    igual lo encuentra. Devuelve la clave real que está en el diccionario, o None si no existe.
     """
     if not diccionario or not clave:
         return None
@@ -77,9 +77,9 @@ def validar_entero(valor, minimo=1, maximo=None, nombre_campo="Campo"):
 
 
 def main(page: ft.Page):
-    # ══════════════════════════════════════════
+    
     # CONFIGURACIÓN DE VENTANA — Modern Dark UI
-    # ══════════════════════════════════════════
+    
     page.title = "Omega RPG — Simulador OSRS Predictivo"
     page.theme_mode = ft.ThemeMode.DARK
     page.window_width = 1150
@@ -89,16 +89,16 @@ def main(page: ft.Page):
 
     os.makedirs(os.path.dirname(RUTA_DATOS), exist_ok=True)
 
-    # ══════════════════════════════════════════
+    
     # INSTANCIACIÓN DE MÓDULOS
-    # ══════════════════════════════════════════
+    
     motor = rng_drops.RNGDrops(RUTA_DATOS)
     servidor = ServidorRPG()
     inventario = InventarioJugador(RUTA_INVENTARIO)
 
-    # ══════════════════════════════════════════
+    
     # WIDGETS DE INTERFAZ
-    # ══════════════════════════════════════════
+    
     txt_ataque = ft.TextField(
         label="⚔️ Ataque (Precisión)", value="1", width=220,
         text_align="center", border_color="#6366f1",
@@ -117,7 +117,7 @@ def main(page: ft.Page):
     switch_pity = ft.Switch(label="🎰 Pity System", value=False, active_color="#f59e0b")
     consola = ft.ListView(expand=True, spacing=5, auto_scroll=True)
 
-    # ═══ SnackBar para feedback visible sobre diálogos modales ═══
+    # SnackBar para feedback visible sobre diálogos modales
     snack = ft.SnackBar(content=ft.Text(""), open=False)
     page.overlay.append(snack)
 
@@ -138,11 +138,11 @@ def main(page: ft.Page):
         consola.update()
         page.update()
 
-    # ══════════════════════════════════════════
+    
     # EVENTOS EN CASCADA (Zona → Jefe → Loot)
     # Why: Flet 0.86.1 reemplazó on_change por on_select en ft.Dropdown.
     #      Usar on_change no dispara ningún evento — ese era el bug.
-    # ══════════════════════════════════════════
+    
     def cargar_zonas():
         """Rellena el dropdown de zonas con las claves del JSON."""
         zonas = motor.datos_mundo.get("zonas", {})
@@ -191,9 +191,9 @@ def main(page: ft.Page):
     dd_zona.on_select = on_zona_select
     dd_jefe.on_select = on_jefe_select
 
-    # ══════════════════════════════════════════
+    
     # CONTROLADOR DEL SIMULADOR
-    # ══════════════════════════════════════════
+    
     def simular(e):
         try:
             # Validar selecciones de dropdowns
@@ -250,31 +250,31 @@ def main(page: ft.Page):
                 log(f"[ERROR] {resultado['error']}", "#ef4444", True)
                 return
 
-            # ═══ Header ═══
+            # Header
             log(f"⚔️ {resultado.get('monstruo')}  →  🎯 {resultado.get('item')}", "#06b6d4", True)
             log(f"🎲 Drop Rate: {resultado.get('prob_formato')}  |  "
                 f"⏱️ {resultado.get('tiempo_por_caza_seg'):.1f}s por kill")
             log("━" * 50, "#1e293b")
 
-            # ═══ Estadística Teórica ═══
+            # Estadística Teórica 
             log("📊 ESTADÍSTICA TEÓRICA (90% Certeza):", "#f59e0b", True)
             log(f"   Kills necesarios: {resultado['teorico']['intentos_90']}")
             log(f"   Horas de farmeo: {resultado['teorico']['tiempo_total_horas']} hrs")
             log("━" * 50, "#1e293b")
 
-            # ═══ Simulación ═══
+            # Simulación 
             log("🎮 SIMULACIÓN DE ESTA SESIÓN:", "#a855f7", True)
             log(f"   Drop obtenido en el Kill #{resultado['simulacion']['intentos']}")
             log(f"   Horas farmeadas: {resultado['simulacion']['tiempo_total_horas']} hrs")
 
-            # ═══ Pity — SOLO se muestra cuando está activado ═══
+            # Pity — SOLO se muestra cuando está activado 
             if switch_pity.value:
                 log("━" * 50, "#1e293b")
                 log("🎰 PITY SYSTEM [ACTIVO — Solo simulación, no se guarda en inventario]:", "#f59e0b", True)
                 log(f"   Probabilidad final alcanzada: "
                     f"{resultado['simulacion']['prob_final_alcanzada']}%")
 
-            # ═══ Registro en Servidor e Inventario — SOLO si pity está desactivado ═══
+            # Registro en Servidor e Inventario — SOLO si pity está desactivado 
             if not switch_pity.value:
                 info_reg = servidor.registrar_simulacion(resultado)
                 nombre_item = resultado.get("item", "")
@@ -292,7 +292,7 @@ def main(page: ft.Page):
                 if peor:
                     log(f"   💀 Peor racha: {peor['item']} ({peor['horas']}h)", "#f87171")
 
-                # ═══ Inventario (Tabla Hash) ═══
+                # Inventario (Tabla Hash) 
                 log("━" * 50, "#1e293b")
                 log("🎒 INVENTARIO ACTUALIZADO:", "#f59e0b", True)
                 log(f"   {nombre_item} ×{nueva_cant}  |  "
@@ -304,9 +304,9 @@ def main(page: ft.Page):
         except Exception:
             log(f"[ERROR DEL SISTEMA]\n{traceback.format_exc()}", "#ef4444", True)
 
-    # ══════════════════════════════════════════
-    # DIÁLOGO CRUD — Crear Jefes + Añadir Ítems
-    # ══════════════════════════════════════════
+    
+    # VENTANA PARA CREAR JEFES Y AÑADIR ÍTEMS (CRUD)
+    
     def cerrar_dialogo():
         page.pop_dialog()
         page.update()
@@ -327,7 +327,7 @@ def main(page: ft.Page):
         txt_hp = ft.TextField(label="Vida (HP)", value="100", width=145, border_color="#1e3a5f")
         txt_def = ft.TextField(label="Defensa", value="10", width=145, border_color="#1e3a5f")
 
-        # ═══ Sistema de filas dinámicas para múltiples drops ═══
+        # Sistema de filas dinámicas para múltiples drops 
         filas_drops = ft.ListView(spacing=5, height=180, auto_scroll=True)
         # Why: Se eliminó items_pendientes — era dead code que nunca se consumía.
 
@@ -631,9 +631,9 @@ def main(page: ft.Page):
         except Exception:
             log(f"[ERROR]\n{traceback.format_exc()}", "#ef4444")
 
-    # ══════════════════════════════════════════
+    
     # SIMULACIÓN DE 1 HORA — Farmeo por tiempo
-    # ══════════════════════════════════════════
+    
     def simular_una_hora(e):
         """
         Simula 1 hora de farmeo contra el boss seleccionado.
@@ -745,11 +745,14 @@ def main(page: ft.Page):
         except Exception:
             log(f"[ERROR DEL SISTEMA]\n{traceback.format_exc()}", "#ef4444", True)
 
-    # ══════════════════════════════════════════
+    
     # DIÁLOGO SIMULACIÓN MASIVA — Multi-Kill
-    # ══════════════════════════════════════════
+    
     def abrir_simulacion_masiva(e):
-        """Diálogo para simular N kills contra un boss y obtener todo el loot."""
+        """
+        Ventana que te deja simular la cantidad de kills que quieras contra un jefe
+        y te muestra todo el loot que obtendrías. 
+        """
 
         # Construir dropdown global de bosses (zona → boss)
         opciones_bosses = []
@@ -925,9 +928,9 @@ def main(page: ft.Page):
         page.show_dialog(dialogo_masiva)
         page.update()
 
-    # ══════════════════════════════════════════
+    
     # PANEL DE DATOS — Historial, Inventario, Ranking
-    # ══════════════════════════════════════════
+    
     def abrir_panel_datos(e):
         """Diálogo con 3 pestañas: Cola FIFO, Tabla Hash, Árbol ABB."""
 
@@ -972,7 +975,7 @@ def main(page: ft.Page):
             lista_hist
         ], spacing=8)
 
-        # ═══ Pestaña 2: Inventario del Jugador (Tabla Hash) ═══
+        # Pestaña 2: Inventario del Jugador (Tabla Hash) 
         lista_inv = ft.ListView(spacing=5, height=260, auto_scroll=True)
         items_ord = inventario.obtener_items_ordenados()
 
@@ -1011,7 +1014,7 @@ def main(page: ft.Page):
             lista_inv
         ], spacing=8)
 
-        # ═══ Pestaña 3: Ranking de Suerte (ABB In-Orden) ═══
+        # Pestaña 3: Ranking de Suerte (ABB In-Orden) 
         lista_rank = ft.ListView(spacing=5, height=260, auto_scroll=True)
         ranking = servidor.obtener_ranking_suerte()
 
@@ -1068,7 +1071,7 @@ def main(page: ft.Page):
             lista_rank
         ], spacing=8)
 
-        # ═══ Pestañas manuales ═══
+        # Pestañas manuales
         contenedor_panel = ft.Container(content=vista_hist, padding=10)
 
         def cambiar_panel(e, nombre):
@@ -1108,9 +1111,9 @@ def main(page: ft.Page):
         page.show_dialog(dialogo_datos)
         page.update()
 
-    # ══════════════════════════════════════════
+    
     # BOTONES PRINCIPALES
-    # ══════════════════════════════════════════
+    
     btn_simular = ft.Button(
         content=ft.Text("▶️  ¡SIMULAR DROP!", color="white",
                         weight=ft.FontWeight.BOLD, size=14),
@@ -1138,9 +1141,9 @@ def main(page: ft.Page):
         on_click=simular_una_hora
     )
 
-    # ══════════════════════════════════════════
+    
     # CONSTRUCCIÓN VISUAL — Modern Dark UI
-    # ══════════════════════════════════════════
+    
     panel_izquierdo = ft.Container(
         content=ft.Column([
             ft.Text("⚔️ Stats OSRS", size=20,
