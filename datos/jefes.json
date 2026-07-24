@@ -1,84 +1,41 @@
 {
     "zonas": {
-        "bosque_oscuro": {
-            "nombre": "Bosque Oscuro del Norte",
+        "Vampyrium": {
+            "nombre": "Vampyrium",
             "monstruos": {
-                "dragon_anciano": {
-                    "nombre": "Dragón Anciano Vorkath",
-                    "vida": 750,
-                    "defensa": 214,
+                "Maggot_King": {
+                    "nombre": "Maggot King",
+                    "vida": 1500,
+                    "defensa": 200,
                     "loot": {
-                        "Semilla de Limpwurt": {
-                            "item": "Semilla de Limpwurt",
-                            "probabilidad_x": 10,
+                        "Elder venator fang": {
+                            "item": "Elder venator fang",
+                            "probabilidad_x": 340,
+                            "probabilidad_num": 1,
+                            "probabilidad_den": 340,
                             "pity": {
-                                "probabilidad_incremento": 0.02
+                                "probabilidad_incremento": 0.000588
                             }
                         },
-                        "Semilla de Ranarr": {
-                            "item": "Semilla de Ranarr",
-                            "probabilidad_x": 50,
+                        "Crimson kisten": {
+                            "item": "Crimson kisten",
+                            "probabilidad_x": 520,
+                            "probabilidad_num": 1,
+                            "probabilidad_den": 520,
                             "pity": {
-                                "probabilidad_incremento": 0.004
+                                "probabilidad_incremento": 0.000385
                             }
                         },
-                        "Semilla de torstol": {
-                            "item": "Semilla de torstol",
-                            "probabilidad_x": 200,
+                        "Maggot marquess": {
+                            "item": "Maggot marquess",
+                            "probabilidad_x": 3500,
+                            "probabilidad_num": 1,
+                            "probabilidad_den": 3500,
                             "pity": {
-                                "probabilidad_incremento": 0.001
+                                "probabilidad_incremento": 5.71e-05
                             }
                         }
                     }
-                }
-            }
-        },
-        "varrock": {
-            "nombre": "Varrock",
-            "monstruos": {
-                "scurrius": {
-                    "nombre": "Scurrius",
-                    "vida": 500,
-                    "defensa": 0,
-                    "loot": {
-                        "Scurrius Spine": {
-                            "item": "Scurrius Spine",
-                            "probabilidad_x": 20,
-                            "pity": {
-                                "probabilidad_incremento": 0.01
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Fremennik": {
-            "nombre": "Fremennik",
-            "monstruos": {
-                "Vorkath": {
-                    "nombre": "Vorkath",
-                    "vida": 750,
-                    "defensa": 214,
-                    "loot": {
-                        "Vorkath Head": {
-                            "item": "Vorkath Head",
-                            "probabilidad_x": 50,
-                            "pity": {
-                                "probabilidad_incremento": 0.004
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Varrock": {
-            "nombre": "Varrock",
-            "monstruos": {
-                "Scurrius": {
-                    "nombre": "Scurrius",
-                    "vida": 500,
-                    "defensa": 0,
-                    "loot": {}
                 }
             }
         },
@@ -88,13 +45,166 @@
                 "Giant Mole": {
                     "nombre": "Giant Mole",
                     "vida": 200,
-                    "defensa": 0,
+                    "defensa": 200,
                     "loot": {
-                        "Mole Skin": {
-                            "item": "Mole Skin",
+                        "Baby mole": {
+                            "item": "Baby mole",
+                            "probabilidad_x": 3000,
+                            "pity": {
+                                "probabilidad_incremento": 0.0001
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Tirannwn": {
+            "nombre": "Tirannwn",
+            "monstruos": {
+                "Zulrah": {
+                    "nombre": "Zulrah",
+                    "vida": 500,
+                    "defensa": 300,
+                    "loot": {
+                        "Tanzanite fang": {
+                            "item": "Tanzanite fang",
+                            "probabilidad_x": 512,
+                            "pity": {
+                                "probabilidad_incremento": 0.001
+                            }
+                        },
+                        "Magic fang": {
+                            "item": "Magic fang",
+                            "probabilidad_x": 512,
+                            "pity": {
+                                "probabilidad_incremento": 0.001
+                            }
+                        },
+                        "Serpentine visage": {
+                            "item": "Serpentine visage",
+                            "probabilidad_x": 512,
+                            "pity": {
+                                "probabilidad_incremento": 0.001
+                            }
+                        },
+                        "Pet snakeling": {
+                            "item": "Pet snakeling",
+                            "probabilidad_x": 3000,
+                            "pity": {
+                                "probabilidad_incremento": 0.0001
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Varlamore": {
+            "nombre": "Varlamore",
+            "monstruos": {
+                "Doom of Mokhaiotl": {
+                    "nombre": "Doom of Mokhaiotl",
+                    "vida": 1200,
+                    "defensa": 250,
+                    "loot": {
+                        "Mokhaiotl cloth": {
+                            "item": "Mokhaiotl cloth",
+                            "probabilidad_x": 512,
+                            "pity": {
+                                "probabilidad_incremento": 0.01
+                            }
+                        },
+                        "Eye of Ayak": {
+                            "item": "Eye of Ayak",
+                            "probabilidad_x": 540,
+                            "pity": {
+                                "probabilidad_incremento": 0.005
+                            }
+                        },
+                        "Avernic treads": {
+                            "item": "Avernic treads",
+                            "probabilidad_x": 540,
+                            "pity": {
+                                "probabilidad_incremento": 0.002
+                            }
+                        },
+                        "Dom Pet": {
+                            "item": "Dom Pet",
+                            "probabilidad_x": 3000,
+                            "pity": {
+                                "probabilidad_incremento": 0.0001
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Morytania": {
+            "nombre": "Morytania",
+            "monstruos": {
+                "Phosani's Nightmare": {
+                    "nombre": "Phosani's Nightmare",
+                    "vida": 2400,
+                    "defensa": 200,
+                    "loot": {
+                        "Inquisitor's mace": {
+                            "item": "Inquisitor's mace",
+                            "probabilidad_x": 160,
+                            "pity": {
+                                "probabilidad_incremento": 0.003
+                            }
+                        },
+                        "Inquisitor's hauberk": {
+                            "item": "Inquisitor's hauberk",
+                            "probabilidad_x": 160,
+                            "pity": {
+                                "probabilidad_incremento": 0.003
+                            }
+                        },
+                        "Slepey tablet": {
+                            "item": "Slepey tablet",
+                            "probabilidad_x": 100,
+                            "pity": {
+                                "probabilidad_incremento": 0.005
+                            }
+                        },
+                        "Little nightmare": {
+                            "item": "Little nightmare",
+                            "probabilidad_x": 4000,
+                            "pity": {
+                                "probabilidad_incremento": 0.0001
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Chasm of Fire": {
+            "nombre": "Chasm of Fire",
+            "monstruos": {
+                "Yama": {
+                    "nombre": "Yama",
+                    "vida": 2500,
+                    "defensa": 225,
+                    "loot": {
+                        "Oathplate": {
+                            "item": "Oathplate",
+                            "probabilidad_x": 300,
+                            "pity": {
+                                "probabilidad_incremento": 0.002
+                            }
+                        },
+                        "Soulflame Horn": {
+                            "item": "Soulflame Horn",
+                            "probabilidad_x": 300,
+                            "pity": {
+                                "probabilidad_incremento": 0.002
+                            }
+                        },
+                        "Demonic ashes": {
+                            "item": "Demonic ashes",
                             "probabilidad_x": 1,
                             "pity": {
-                                "probabilidad_incremento": 0.2
+                                "probabilidad_incremento": 0.1
                             }
                         }
                     }
