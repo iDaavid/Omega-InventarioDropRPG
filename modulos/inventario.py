@@ -14,6 +14,7 @@ Referencia académica: Luis Joyanes Aguilar — Tablas Hash / Dispersión.
 
 import json
 import os
+from typing import Dict, List, Tuple
 
 
 class InventarioJugador:
@@ -27,18 +28,18 @@ class InventarioJugador:
     Persiste los datos en un archivo JSON para sobrevivir entre sesiones.
     """
 
-    def __init__(self, ruta_json):
+    def __init__(self, ruta_json: str):
         """
         Inicializa el inventario cargando datos existentes o creando uno vacío.
 
         Args:
             ruta_json: Ruta al archivo de persistencia (e.g., 'datos/recursos.json').
         """
-        self.ruta_json = ruta_json
+        self.ruta_json: str = ruta_json
         # Tabla Hash interna: {"nombre_item": cantidad}
-        self._items = self.cargar()
+        self._items: Dict[str, int] = self.cargar()
 
-    def cargar(self):
+    def cargar(self) -> Dict[str, int]:
         """
         Lee el inventario desde el archivo JSON.
 
@@ -55,7 +56,7 @@ class InventarioJugador:
         except (FileNotFoundError, json.JSONDecodeError):
             return {}
 
-    def guardar(self):
+    def guardar(self) -> bool:
         """
         Persiste el inventario actual en el archivo JSON.
 
@@ -70,7 +71,7 @@ class InventarioJugador:
         except Exception:
             return False
 
-    def agregar_item(self, nombre, cantidad=1):
+    def agregar_item(self, nombre: str, cantidad: int = 1) -> int:
         """
         Añade un ítem al inventario. Si ya existe, incrementa la cantidad.
 
@@ -91,7 +92,7 @@ class InventarioJugador:
         self.guardar()
         return self._items[nombre]
 
-    def obtener_cantidad(self, nombre):
+    def obtener_cantidad(self, nombre: str) -> int:
         """
         Consulta la cantidad de un ítem específico. O(1) lookup.
 
@@ -103,7 +104,7 @@ class InventarioJugador:
         """
         return self._items.get(nombre, 0)
 
-    def obtener_inventario_completo(self):
+    def obtener_inventario_completo(self) -> Dict[str, int]:
         """
         Devuelve una copia del inventario completo.
 
@@ -112,7 +113,7 @@ class InventarioJugador:
         """
         return dict(self._items)
 
-    def obtener_items_ordenados(self):
+    def obtener_items_ordenados(self) -> List[Tuple[str, int]]:
         """
         Devuelve el inventario como lista de tuplas ordenadas por cantidad descendente.
         Útil para renderizar en la UI con los ítems más abundantes primero.
@@ -122,7 +123,7 @@ class InventarioJugador:
         """
         return sorted(self._items.items(), key=lambda x: x[1], reverse=True)
 
-    def total_items(self):
+    def total_items(self) -> int:
         """
         Calcula la cantidad total de ítems acumulados (suma de todas las cantidades).
 
@@ -131,7 +132,7 @@ class InventarioJugador:
         """
         return sum(self._items.values())
 
-    def total_tipos(self):
+    def total_tipos(self) -> int:
         """
         Cantidad de tipos de ítems distintos en el inventario.
 
