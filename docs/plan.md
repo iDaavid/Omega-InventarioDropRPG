@@ -16,3 +16,8 @@
 * **Luis Bernay:** Responsable de `rng_drops.py` y la estructura de `jefes.json`. Se enfocará en la precisión de las probabilidades, la implementación del sistema "Pity" y la lógica matemática de obtención de ítems.
 * **Carlos Chinchilla:** Responsable de la capa visual del juego. Diseñará la interfaz para que sea intuitiva, renderizará los logs del historial usando listas y gestionará la navegación mediante pilas.
 * **Mahlon Romero:** Responsable de `inventario.py` y la persistencia de datos. Asegurará que los recursos se guarden/carguen correctamente, implementará el manejo de errores (try-except) y realizará pruebas de integración para asegurar que todo el sistema sea robusto.
+
+## Progreso y Actualizaciones (Revisión)
+- **Modularización Completa:** Se establecieron módulos independientes (`interfaz.py`, `inventario.py`, `rng_drops.py`, `servidor.py`) y un punto de entrada (`main.py`), lo cual asegura la separación de responsabilidades.
+- **Chequeos de Lógica y UI:** La interfaz en Flet fue conectada al servidor (cola de eventos) logrando realizar simulaciones de combate asíncronas y actualizando el inventario en tiempo real, demostrando el uso de Colas y Pilas.
+- **Configuración de Datos:** El archivo `jefes.json` ha sido preparado para ser dinámico y escalar, facilitando la adición de nuevas zonas y jefes como base de datos local.
