@@ -11,6 +11,7 @@ Referencia académica: Luis Joyanes Aguilar — Estructuras de Datos en Java/C++
 
 from collections import deque
 from datetime import datetime
+from typing import Optional, List, Dict, Any, Deque
 
 
 # ============================================================
@@ -23,15 +24,15 @@ from datetime import datetime
 class NodoCaceria:
     """Nodo individual del ABB. Almacena el resultado completo de una simulación."""
 
-    def __init__(self, item, boss, intentos, horas, timestamp):
-        self.item = item
-        self.boss = boss
-        self.intentos = intentos
+    def __init__(self, item: str, boss: str, intentos: int, horas: float, timestamp: str):
+        self.item: str = item
+        self.boss: str = boss
+        self.intentos: int = intentos
         # Clave de ordenación del ABB: horas de farmeo invertidas
-        self.horas = horas
-        self.timestamp = timestamp
-        self.izquierda = None
-        self.derecha = None
+        self.horas: float = horas
+        self.timestamp: str = timestamp
+        self.izquierda: Optional['NodoCaceria'] = None
+        self.derecha: Optional['NodoCaceria'] = None
 
 
 class ArbolHistorial:
@@ -44,15 +45,15 @@ class ArbolHistorial:
     """
 
     def __init__(self):
-        self.raiz = None
-        self._tamano = 0
+        self.raiz: Optional[NodoCaceria] = None
+        self._tamano: int = 0
 
     @property
-    def tamano(self):
+    def tamano(self) -> int:
         """Cantidad total de nodos en el árbol."""
         return self._tamano
 
-    def insertar(self, item, boss, intentos, horas, timestamp=None):
+    def insertar(self, item: str, boss: str, intentos: int, horas: float, timestamp: Optional[str] = None) -> None:
         """
         Inserta un nuevo resultado de simulación en el ABB.
 
@@ -72,7 +73,7 @@ class ArbolHistorial:
             self._insertar_recursivo(self.raiz, item, boss, intentos, horas, timestamp)
         self._tamano += 1
 
-    def _insertar_recursivo(self, nodo_actual, item, boss, intentos, horas, timestamp):
+    def _insertar_recursivo(self, nodo_actual: NodoCaceria, item: str, boss: str, intentos: int, horas: float, timestamp: str) -> None:
         """Recorre el árbol recursivamente para encontrar la posición correcta."""
         if horas < nodo_actual.horas:
             if nodo_actual.izquierda is None:
@@ -85,7 +86,7 @@ class ArbolHistorial:
             else:
                 self._insertar_recursivo(nodo_actual.derecha, item, boss, intentos, horas, timestamp)
 
-    def obtener_en_orden(self):
+    def obtener_en_orden(self) -> List[Dict[str, Any]]:
         """
         Recorrido In-Orden (Izquierda → Raíz → Derecha).
         Devuelve todas las simulaciones ordenadas de menor a mayor horas.
@@ -93,11 +94,11 @@ class ArbolHistorial:
         Returns:
             list[dict]: Lista de resultados ordenados por horas ascendente.
         """
-        resultado = []
+        resultado: List[Dict[str, Any]] = []
         self._in_orden_recursivo(self.raiz, resultado)
         return resultado
 
-    def _in_orden_recursivo(self, nodo_actual, lista):
+    def _in_orden_recursivo(self, nodo_actual: Optional[NodoCaceria], lista: List[Dict[str, Any]]) -> None:
         """Recorrido recursivo in-orden del subárbol."""
         if nodo_actual is not None:
             self._in_orden_recursivo(nodo_actual.izquierda, lista)
@@ -110,7 +111,7 @@ class ArbolHistorial:
             })
             self._in_orden_recursivo(nodo_actual.derecha, lista)
 
-    def obtener_minimo(self):
+    def obtener_minimo(self) -> Optional[Dict[str, Any]]:
         """
         Encuentra la mejor racha (menos horas de farmeo).
         Navega siempre a la izquierda hasta llegar a una hoja.
@@ -129,7 +130,7 @@ class ArbolHistorial:
             "timestamp": nodo.timestamp
         }
 
-    def obtener_maximo(self):
+    def obtener_maximo(self) -> Optional[Dict[str, Any]]:
         """
         Encuentra la peor racha (más horas de farmeo).
         Navega siempre a la derecha hasta llegar a una hoja.
@@ -148,7 +149,7 @@ class ArbolHistorial:
             "timestamp": nodo.timestamp
         }
 
-    def buscar_por_rango(self, horas_min, horas_max):
+    def buscar_por_rango(self, horas_min: float, horas_max: float) -> List[Dict[str, Any]]:
         """
         Búsqueda por rango en el ABB. Devuelve simulaciones donde
         horas_min <= horas <= horas_max.
@@ -163,11 +164,11 @@ class ArbolHistorial:
         Returns:
             list[dict]: Simulaciones dentro del rango, ordenadas.
         """
-        resultado = []
+        resultado: List[Dict[str, Any]] = []
         self._buscar_rango_recursivo(self.raiz, horas_min, horas_max, resultado)
         return resultado
 
-    def _buscar_rango_recursivo(self, nodo, h_min, h_max, lista):
+    def _buscar_rango_recursivo(self, nodo: Optional[NodoCaceria], h_min: float, h_max: float, lista: List[Dict[str, Any]]) -> None:
         """Poda ramas que no pueden contener valores en el rango."""
         if nodo is None:
             return
@@ -203,15 +204,15 @@ class ServidorRPG:
     ya que su propósito es demostrar las estructuras en memoria.
     """
 
-    MAX_HISTORIAL = 10
+    MAX_HISTORIAL: int = 10
 
     def __init__(self):
         # Cola FIFO: al alcanzar MAX_HISTORIAL, descarta automáticamente el más antiguo
-        self.cola_eventos = deque(maxlen=self.MAX_HISTORIAL)
+        self.cola_eventos: Deque[Dict[str, Any]] = deque(maxlen=self.MAX_HISTORIAL)
         # ABB para clasificación por horas de farmeo
-        self.historial = ArbolHistorial()
+        self.historial: ArbolHistorial = ArbolHistorial()
 
-    def registrar_simulacion(self, resultado):
+    def registrar_simulacion(self, resultado: Dict[str, Any]) -> Dict[str, int]:
         """
         Punto de entrada principal. Recibe el resultado de una simulación
         y lo distribuye a ambas estructuras de datos.
@@ -232,10 +233,10 @@ class ServidorRPG:
 
         # Registro estructurado para la cola FIFO
         registro = {
-            "item": item,
-            "boss": boss,
-            "intentos": intentos,
-            "horas": horas,
+            "item": str(item),
+            "boss": str(boss),
+            "intentos": int(intentos),
+            "horas": float(horas),
             "timestamp": timestamp
         }
 
@@ -243,14 +244,14 @@ class ServidorRPG:
         self.cola_eventos.append(registro)
 
         # Insertar en el ABB ordenado por horas
-        self.historial.insertar(item, boss, intentos, horas, timestamp)
+        self.historial.insertar(registro["item"], registro["boss"], registro["intentos"], registro["horas"], timestamp)
 
         return {
             "posicion_cola": len(self.cola_eventos),
             "total_en_arbol": self.historial.tamano
         }
 
-    def obtener_historial_reciente(self):
+    def obtener_historial_reciente(self) -> List[Dict[str, Any]]:
         """
         Devuelve las últimas N simulaciones en orden FIFO (más antigua primero).
 
@@ -259,7 +260,7 @@ class ServidorRPG:
         """
         return list(self.cola_eventos)
 
-    def obtener_ranking_suerte(self):
+    def obtener_ranking_suerte(self) -> List[Dict[str, Any]]:
         """
         Devuelve todas las simulaciones ordenadas por horas (recorrido in-orden del ABB).
         Las primeras entradas son las de mejor suerte (menos horas).
@@ -269,7 +270,7 @@ class ServidorRPG:
         """
         return self.historial.obtener_en_orden()
 
-    def obtener_mejor_racha(self):
+    def obtener_mejor_racha(self) -> Optional[Dict[str, Any]]:
         """
         Devuelve la simulación con menor cantidad de horas de farmeo.
         Operación O(log n) promedio — recorre la rama izquierda del ABB.
@@ -279,7 +280,7 @@ class ServidorRPG:
         """
         return self.historial.obtener_minimo()
 
-    def obtener_peor_racha(self):
+    def obtener_peor_racha(self) -> Optional[Dict[str, Any]]:
         """
         Devuelve la simulación con mayor cantidad de horas de farmeo.
         Operación O(log n) promedio — recorre la rama derecha del ABB.
@@ -289,7 +290,7 @@ class ServidorRPG:
         """
         return self.historial.obtener_maximo()
 
-    def obtener_simulaciones_por_rango(self, horas_min, horas_max):
+    def obtener_simulaciones_por_rango(self, horas_min: float, horas_max: float) -> List[Dict[str, Any]]:
         """
         Filtra simulaciones por rango de horas usando búsqueda BST.
 
