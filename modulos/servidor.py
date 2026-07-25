@@ -37,11 +37,11 @@ class NodoCaceria:
 
 class ArbolHistorial:
     """
-    Árbol Binario de Búsqueda (ABB) que clasifica simulaciones por horas.
+    Árbol Binario de Búsqueda (ABB), este clasifica simulaciones por horas.
 
     Complejidad promedio: O(log n) para inserción y búsqueda.
-    Peor caso (árbol degenerado): O(n) — aceptable para el volumen de datos
-    de este proyecto académico.
+    Peor caso (árbol degenerado): O(n) — aceptable por el volumen de datos
+    del proyecto/programa.
     """
 
     def __init__(self):
@@ -74,7 +74,7 @@ class ArbolHistorial:
         self._tamano += 1
 
     def _insertar_recursivo(self, nodo_actual: NodoCaceria, item: str, boss: str, intentos: int, horas: float, timestamp: str) -> None:
-        """Recorre el árbol recursivamente para encontrar la posición correcta."""
+        """Aquí se recorre el árbol recursivamente para encontrar la posición correcta."""
         if horas < nodo_actual.horas:
             if nodo_actual.izquierda is None:
                 nodo_actual.izquierda = NodoCaceria(item, boss, intentos, horas, timestamp)
@@ -151,7 +151,7 @@ class ArbolHistorial:
 
     def buscar_por_rango(self, horas_min: float, horas_max: float) -> List[Dict[str, Any]]:
         """
-        Búsqueda por rango en el ABB. Devuelve simulaciones donde
+        Búsqueda por rango en el ABB. Este devuelve simulaciones donde
         horas_min <= horas <= horas_max.
 
         Aprovecha la propiedad BST para podar ramas irrelevantes,
@@ -172,7 +172,7 @@ class ArbolHistorial:
         """Poda ramas que no pueden contener valores en el rango."""
         if nodo is None:
             return
-        # Solo explorar izquierda si el nodo actual podría tener hijos menores dentro del rango
+        # Solo se explora la izquierda si el nodo actual podría tener hijos menores dentro del rango
         if nodo.horas > h_min:
             self._buscar_rango_recursivo(nodo.izquierda, h_min, h_max, lista)
         # Incluir nodo actual si está dentro del rango
@@ -182,7 +182,7 @@ class ArbolHistorial:
                 "intentos": nodo.intentos, "horas": nodo.horas,
                 "timestamp": nodo.timestamp
             })
-        # Solo explorar derecha si el nodo actual podría tener hijos mayores dentro del rango
+        # Solo se explora derecha si el nodo actual podría tener hijos mayores dentro del rango
         if nodo.horas < h_max:
             self._buscar_rango_recursivo(nodo.derecha, h_min, h_max, lista)
 
@@ -194,14 +194,14 @@ class ArbolHistorial:
 
 class ServidorRPG:
     """
-    Servidor simulado que orquesta las estructuras de datos del proyecto.
+    Servidor simulado que arma las estructuras de datos del proyecto.
 
     Combina:
     - Cola FIFO (deque con maxlen) para historial reciente.
     - Árbol Binario de Búsqueda para ranking por suerte.
 
     El servidor no persiste datos entre sesiones intencionalmente,
-    ya que su propósito es demostrar las estructuras en memoria.
+    ya que, su propósito es demostrar las estructuras en memoria.
     """
 
     MAX_HISTORIAL: int = 10
